@@ -5,4 +5,6 @@ Closure JS API spec: https://github.com/google/closure-library/blob/master/closu
 
 Open-source Go server: https://github.com/samegoal/wc
 
+Shared whiteboard Demo: https://webchannel.sandbox.google.com/static/whiteboard.html
+
 
