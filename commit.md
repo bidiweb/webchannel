@@ -33,13 +33,15 @@ a bidirectional channel.
 
 ##Flow control
 1. For this discussion, we assume client and server message-delivery are
-   push-based, async APIs (similar to WebSocket), and delivered messages
-   are saved in an ordered queue of some kind owned by the application.
-2. The sender, once a commit is issued, should check the "pending message
-   queue" (issued after the last commit has been acked), and enter into a
-   suspending state to stop or slow down if the queue reaches a certain limit.
+   push-based, async APIs (similar to WebSocket). 
+2. For a sender, non-committed messages are saved in an ordered queue of 
+   some kind owned by the application if the application relies on this
+   protocol to recover from peer failures.
+3. The sender, once a commit is issued, should check the number of "pending
+   messages" (issued after the last commit has been acked), and enter into a
+   suspending state to stop or slow down if the size reaches a certain limit.
    When an ack comes back, the sender may exit from such a state and resume.
-3. The receiver may generate a push-back signal to the sender by delaying
+4. The receiver may generate a push-back signal to the sender by delaying
    the ack for the most recent commit. Newly-arrived messages still need to be
    delivered to the application while an ack is pending.
 
@@ -54,7 +56,7 @@ a bidirectional channel.
 
 ```
 1. channel.commit(callback())                  # client is the sender
-   channel.getPendingMessages()
+   channel.getNonAckedMessageCount()           
 2. channel.onCommit(commitId)                  # client is the receiver
    channel.ackCommit(commitId)
 ```
