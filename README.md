@@ -1,4 +1,8 @@
 # WebChannel
-Bidirectional messaging over HTTP as one concrete implementation of the bidiweb semantics.
+Bidirectional messaging over HTTP, one concrete implementation based on the bidi-web semantics.
 
-Current JS API spec: https://github.com/google/closure-library/blob/master/closure/goog/labs/net/webchannel.js
+Closure JS API spec: https://github.com/google/closure-library/blob/master/closure/goog/labs/net/webchannel.js
+
+Open-source Go server: https://github.com/samegoal/wc
+
+
