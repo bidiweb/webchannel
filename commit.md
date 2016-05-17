@@ -22,6 +22,9 @@ a bidirectional channel.
 4. The client is expected to receive a commit-ack message (with the same
    seqId as the commit message) from the server. Any messages sent before the
    acked commit can be garbaged collected (permanently) by the implementation.
+   The protocol doesn't specify any timeout for the commit-ack message, and
+   it's the application's responsibility to abort the channel should a commit
+   be timed out.
 5. The server will deliver the commit message to the application; and expect
    an ack callback. Obsoleted commits may be ignored. New messages will
    be delivered as usual when there is a commit pending to be acked.
@@ -50,7 +53,7 @@ a bidirectional channel.
 ##Client-side APIs (for WebChannel)
 
 ```
-1. channel.commit(callback(), opt_timeout)     # client is the sender
+1. channel.commit(callback())                  # client is the sender
    channel.getPendingMessages()
 2. channel.onCommit(commitId)                  # client is the receiver
    channel.ackCommit(commitId)
