@@ -1,9 +1,9 @@
-#Commit Protocol (experimental)
+# Commit Protocol (experimental)
 
 An experimental protocol to support explicit in-band commits over
 a bidirectional channel.
 
-##Use cases and requirements
+## Use cases and requirements
 1. Support in-band commits with explicit acks from the application, similar to
    situation when an application needs to issue a snapshot or sync/flush command.
 2. Enable end-to-end flow-control, assuming messages are delivered in order
@@ -11,7 +11,7 @@ a bidirectional channel.
 3. Allow recovery of in-flight messages from a (permanently) failed channel,
    likely caused by a failed peer.
 
-##The algorithm
+## The algorithm
 1. Define a new control message: commit, with a monolithically increasing seqId
    that is independent of the message seqId.
 2. The client may issue a commit message, which is to be delivered in order
@@ -31,7 +31,7 @@ a bidirectional channel.
 6. This algorithm is a symmetric one, i.e. 2-5 applies to server-to-client
    communication too.
 
-##Flow control
+## Flow control
 1. For this discussion, we assume client and server message-delivery are
    push-based, async APIs (similar to WebSocket). 
 2. For a sender, non-committed messages are saved in an ordered queue of 
@@ -45,14 +45,14 @@ a bidirectional channel.
    the ack for the most recent commit. Newly-arrived messages still need to be
    delivered to the application while an ack is pending.
 
-##Failure recovery
+## Failure recovery
 1. When a channel is permanently failed, e.g. the peer is gone or the network
    is partitioned, all the pending messages should be made available to the
    application, which may save and retry those messages with a new channel.
 2. Messages buffered at the HTTP/WebChannel level constitute only a subset of
    unacked pending messages.
 
-##Client-side APIs (for WebChannel)
+## Client-side APIs (for WebChannel)
 
 ```
 1. channel.commit(callback())                  # client is the sender
